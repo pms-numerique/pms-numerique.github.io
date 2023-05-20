@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de partitions v1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="script.js"></script>
+</head>
+<body class="body">
+    <div class="title">
+        <h1>Partitions PMS</h1>
+        <h3>v1.0</h3></div>
+        <div class="search">
+        <h2>
+            Rechercher une partition :
+        </h2>
+        
+        <p style="font-size: 18px;font-style: italic;">Vous pouvez remplir un ou plusieurs champs</p><br>
+        <div class="form"><h3 style="margin: auto;font-size:20px;">Titre : </h3><input id="titre" class="input"></div><br>
+        <div class="form"><h3 style="margin: auto;font-size:20px;">Instrument : </h3><input id="instrument" class="input"></div>
+        <br><br>
+        
+        <button onclick="search(getValue('titre'), getValue('instrument'))" class="search-button">Rechercher</button>
+   </div>
+    <div class="bests" hidden="true" id="div_bests">
+        <h2>Les plus pertinents :</h2>
+        <ul id="bests" type="none">
+
+        </ul>
+    </div><br>
+    <div class="results" hidden="true" id="div_results">
+        <h2>Tous les résultats :</h2>
+        <ul id="results" type="none">
+
+        </ul>
+    </div>
+    <script>
+        function getValue(id) {
+            let value = document.getElementById(id).value;
+            results = document.getElementById("results");
+            results.innerHTML = "";
+            document.getElementById("div_results").hidden = true;
+            bests = document.getElementById("bests");
+            bests.innerHTML = "";
+            document.getElementById("div_bests").hidden = true;
+            return value;
+        }
+        function search_finished(response_item, response_url) {
+            item = response_item;
+            url = response_url;
+            results = document.getElementById("results");
+            results.innerHTML = "";
+            item.forEach(function(item, index, array) {
+            let open_part = "open_part(this.id)";
+            let preview_part = "preview_part(this.id)";
+            results.innerHTML = results.innerHTML + "<li class='li'>"+item+"<br><button class='button-li' onclick='"+open_part+"'"+" id='"+index+"'>Télécharger</button><button class='button-li' onclick='"+preview_part+"'"+" id='"+index+"'>Visualiser</button></li><br><br>";
+            })
+            document.getElementById("div_results").hidden = false;
+        }
+        function best_finished(response_item, response_url) {
+            item_best = response_item;
+            url_best = response_url;
+            bests = document.getElementById("bests");
+            bests.innerHTML = "";
+            item_best.forEach(function(item, index, array) {
+            let open_part_best = "open_part_best(this.id)";
+            let preview_part_best = "preview_part_best(this.id)";
+            if(item != item_best[index - 1]) {
+            bests.innerHTML = bests.innerHTML + "<li class='li'>"+item+"<br><button class='button-li-2' onclick='"+open_part_best+"'"+" id='"+index+"'>Télécharger</button><button class='button-li-2' onclick='"+preview_part_best+"'"+" id='"+index+"'>Visualiser</button></li><br><br>";
+        }})
+            document.getElementById("div_bests").hidden = false;
+            console.log(item_best);
+        }
+        function open_part(id) {
+            url_load = url[id];
+            length = url_load.length;
+            if(length == 83) {
+                url_load = url_load.substring(32, length - 18);
+                url_load = "https://drive.google.com/uc?export=download&id="+url_load;
+            }
+                        
+            window.open(url_load,'_blank');
+        }
+        function open_part_best(id) {
+            url_load_best = url_best[id];
+            length = url_load_best.length;
+            if(length == 83) {
+                url_load_best = url_load_best.substring(32, length - 18);
+                url_load_best = "https://drive.google.com/uc?export=download&id="+url_load_best;
+            }
+
+            window.open(url_load_best,'_blank');
+        }
+        function preview_part(id) {
+            url_load = url[id];  
+            window.open(url_load,'_blank');
+        }
+        function preview_part_best(id) {
+            url_load_best = url_best[id];
+            window.open(url_load_best,'_blank');
+        }
+    </script>
+</body>
+</html>
+
