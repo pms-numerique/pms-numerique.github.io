@@ -9,7 +9,7 @@ async function main(res_json){
     
 }
 
-function search(titre, compositeur, instrument_out, formation) {
+function search(titre, compositeur, instrument_out) {
     String.prototype.sansAccent = function(){
         var accent = [
             /[\300-\306]/g, /[\340-\346]/g, // A, a
@@ -109,12 +109,7 @@ function search(titre, compositeur, instrument_out, formation) {
     instrument_ = instrument_.sansAccent();
     instrument_en = getInstrument_en(instrument_);
     }
-    if(formation != ""){
-    formation_ = formation.replace(/ /g,'');
-    formation_ = formation_.toLowerCase();
-    formation_ = formation_.sansAccent();
-    }
-
+    
     index_part.forEach(function(item, index, array) {
         score = 0;
         item_ = item.Nom.replace(/ /g,'');
