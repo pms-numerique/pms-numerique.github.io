@@ -76,17 +76,17 @@
         function stoperror() {
             document.getElementById("erreur-titre-compositeur").innerHTML = "   ";
         }
-        function send(titre, compositeur, instrument, formation) {
+        function send(titre, compositeur, instrument) {
             if(titre == "") {
                 if(compositeur == "") {
                     document.getElementById("erreur-titre-compositeur").innerHTML = "Veuillez entrer au moins un titre ou un compositeur";
                 }
                 else {
-                    search(titre, compositeur, instrument, formation);
+                    search(titre, compositeur, instrument);
                 }
             }
             else {
-            search(titre, compositeur, instrument, formation);
+            search(titre, compositeur, instrument);
             }
         }
         function optionSelectInstrument(select){
