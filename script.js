@@ -1,4 +1,4 @@
-fetch("data/data.json")
+fetch("data.json")
 .then(response => response.json())
 .then(response => main(JSON.stringify(response)))
 .catch(error => alert("Erreur : " + error));
